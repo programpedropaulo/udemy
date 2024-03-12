@@ -24,29 +24,31 @@ contrário disso:
 O primeiro dígito do CPF é 7
 """
 
-
-def formata_cpf(cpf):
-    # verifica se o cpf possui 11 digitos
-    if  len(cpf) != 11: 
-
-        return None
-    
-    #formata o CPF com pontos e traços 
-    cpf_formatado =  f" {cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
-    
-    return cpf_formatado
- 
 cpf = input("Qual e o seu CPF?")
-cpf_formatado = formata_cpf(cpf)   
 
+    def formata_cpf(cpf):
+        # verifica se o cpf possui 11 digitos
+        if  len(cpf) != 11: 
+
+            return None
+        
+        #formata o CPF com pontos e traços 
+        cpf_formatado =  f" {cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
+        
+        return cpf_formatado
+
+cpf = input("Qual e o seu CPF?")    
+cpf_formatado = formata_cpf(cpf)  
+
+if cpf_formatado:
 print(f"Seu CPF é {cpf_formatado} correto?")
 resposta_do_cpf = ("(Sim/Não): ").lower()
 
-if resposta_do_cpf == "sim":
-   #verificaçao se o numero do cpf e valido
-    pass
-elif resposta_do_cpf == "nao" or resposta_do_cpf =="não":
-    print ("CPF inválido")
-    #retorna ao inicio do codigo
-else:
-    print("Resposta inválida")
+    if resposta_do_cpf == "sim":
+    #verificaçao se o numero do cpf e valido(ainda nao implementado)
+        pass
+    elif resposta_do_cpf == "nao" or resposta_do_cpf =="não":
+        print ("CPF inválido")
+        #retorna ao inicio do codigo(ainda nao implementada)
+    else:
+        print("Resposta inválida")

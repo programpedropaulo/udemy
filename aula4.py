@@ -1,0 +1,2 @@
+#tipos primitivos
+#operadores logicos
