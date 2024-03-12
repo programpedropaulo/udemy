@@ -28,6 +28,9 @@ def formata_cpf(cpf):
     if len(cpf) != 11: 
         return None
         
+    # Remove caracteres não numéricos do CPF
+    cpf = ''.join(filter(str.isdigit, cpf))
+
     # Formata o CPF com pontos e traços 
     cpf_formatado = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
         
@@ -41,7 +44,7 @@ def valida_cpf(cpf):
     if len(cpf) != 11:
         return False
 
-    # Calcula o primeiro dígito verificador
+    # Calcula os dígitos verificadores
     soma = 0
     peso = 10
     for i in range(9):
@@ -52,7 +55,6 @@ def valida_cpf(cpf):
     if digito_1 > 9:
         digito_1 = 0
 
-    # Calcula o segundo dígito verificador
     soma = 0
     peso = 11
     for i in range(10):
@@ -69,26 +71,28 @@ def valida_cpf(cpf):
     else:
         return False
 
-cpf = input("Qual é o seu CPF? ")
-cpf_formatado = formata_cpf(cpf)  
+while True:
+    cpf = input("Qual é o seu CPF? ")
+    cpf_formatado = formata_cpf(cpf)  
 
-if cpf_formatado:
-    print(f"Seu CPF é {cpf_formatado} correto?")
+    if cpf_formatado:
+        print(f"Seu CPF é {cpf_formatado} correto?")
 
-    resposta_do_cpf = input("(Sim/Não): ").lower()  # Corrigido para input() ao invés de uma string fixa
+        resposta_do_cpf = input("(Sim/Não): ").lower()  # Corrigido para input() ao invés de uma string fixa
 
-    if resposta_do_cpf == "sim":
-        if valida_cpf(cpf):  # Chama a função para validar o CPF
-            print("CPF válido")
-        else:
+        if resposta_do_cpf == "sim":
+            if valida_cpf(cpf):  # Chama a função para validar o CPF
+                print("CPF válido")
+            else:
+                print("CPF inválido")
+        elif resposta_do_cpf == "nao" or resposta_do_cpf == "não":  
             print("CPF inválido")
-    elif resposta_do_cpf == "nao" or resposta_do_cpf == "não":  
-        print("CPF inválido")
-        # Retorna ao início do código (ainda não implementado)
-    else:
-        print("Resposta inválida")
+        else:
+            print("Resposta inválida")
 
 
+
+
+        
 
     
-
