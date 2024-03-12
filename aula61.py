@@ -23,32 +23,72 @@ contrário disso:
 
 O primeiro dígito do CPF é 7
 """
-
-cpf = input("Qual e o seu CPF?")
-
-    def formata_cpf(cpf):
-        # verifica se o cpf possui 11 digitos
-        if  len(cpf) != 11: 
-
-            return None
+def formata_cpf(cpf):
+    # Verifica se o CPF possui 11 dígitos
+    if len(cpf) != 11: 
+        return None
         
-        #formata o CPF com pontos e traços 
-        cpf_formatado =  f" {cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
+    # Formata o CPF com pontos e traços 
+    cpf_formatado = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
         
-        return cpf_formatado
+    return cpf_formatado
 
-cpf = input("Qual e o seu CPF?")    
+def valida_cpf(cpf):
+    # Remove caracteres não numéricos do CPF
+    cpf = ''.join(filter(str.isdigit, cpf))
+
+    # Verifica se o CPF tem 11 dígitos após remover caracteres não numéricos
+    if len(cpf) != 11:
+        return False
+
+    # Calcula o primeiro dígito verificador
+    soma = 0
+    peso = 10
+    for i in range(9):
+        soma += int(cpf[i]) * peso
+        peso -= 1
+
+    digito_1 = 11 - (soma % 11)
+    if digito_1 > 9:
+        digito_1 = 0
+
+    # Calcula o segundo dígito verificador
+    soma = 0
+    peso = 11
+    for i in range(10):
+        soma += int(cpf[i]) * peso
+        peso -= 1
+
+    digito_2 = 11 - (soma % 11)
+    if digito_2 > 9:
+        digito_2 = 0
+
+    # Verifica se os dígitos verificadores são iguais aos dígitos do CPF
+    if int(cpf[9]) == digito_1 and int(cpf[10]) == digito_2:
+        return True
+    else:
+        return False
+
+cpf = input("Qual é o seu CPF? ")
 cpf_formatado = formata_cpf(cpf)  
 
 if cpf_formatado:
-print(f"Seu CPF é {cpf_formatado} correto?")
-resposta_do_cpf = ("(Sim/Não): ").lower()
+    print(f"Seu CPF é {cpf_formatado} correto?")
+
+    resposta_do_cpf = input("(Sim/Não): ").lower()  # Corrigido para input() ao invés de uma string fixa
 
     if resposta_do_cpf == "sim":
-    #verificaçao se o numero do cpf e valido(ainda nao implementado)
-        pass
-    elif resposta_do_cpf == "nao" or resposta_do_cpf =="não":
-        print ("CPF inválido")
-        #retorna ao inicio do codigo(ainda nao implementada)
+        if valida_cpf(cpf):  # Chama a função para validar o CPF
+            print("CPF válido")
+        else:
+            print("CPF inválido")
+    elif resposta_do_cpf == "nao" or resposta_do_cpf == "não":  
+        print("CPF inválido")
+        # Retorna ao início do código (ainda não implementado)
     else:
         print("Resposta inválida")
+
+
+
+    
+
