@@ -26,6 +26,7 @@ O primeiro dígito do CPF é 7
 def formata_cpf(cpf):
     # Verifica se o CPF possui 11 dígitos
     if len(cpf) != 11: 
+        print("Verifique o número de caracteres")
         return None
         
     # Remove caracteres não numéricos do CPF
@@ -42,31 +43,31 @@ def valida_cpf(cpf):
 
     # Verifica se o CPF tem 11 dígitos após remover caracteres não numéricos
     if len(cpf) != 11:
+        print("Verifique o número de caracteres")
         return False
 
     # Calcula os dígitos verificadores
-    soma = 0
-    peso = 10
-    for i in range(9):
-        soma += int(cpf[i]) * peso
-        peso -= 1
+    nove_digitos = cpf[:9]
+    contador_regressivo_1 = 10
+    resultado_digito_1 = 0
+    for digito in nove_digitos:
+        resultado_digito_1 += int(digito) * contador_regressivo_1
+        contador_regressivo_1 -= 1
+    digito_1 = (resultado_digito_1 * 10) % 11
+    digito_1 = digito_1 if digito_1 <= 9 else 0
 
-    digito_1 = 11 - (soma % 11)
-    if digito_1 > 9:
-        digito_1 = 0
+    dez_digitos = nove_digitos + str(digito_1)
+    contador_regressivo_2 = 11
+    resultado_digito_2 = 0
+    for digito in dez_digitos:
+        resultado_digito_2 += int(digito) * contador_regressivo_2
+        contador_regressivo_2 -= 1
+    digito_2 = (resultado_digito_2 * 10) % 11
+    digito_2 = digito_2 if digito_2 <= 9 else 0
 
-    soma = 0
-    peso = 11
-    for i in range(10):
-        soma += int(cpf[i]) * peso
-        peso -= 1
+    cpf_gerado_pelo_calculo = f'{nove_digitos}{digito_1}{digito_2}'
 
-    digito_2 = 11 - (soma % 11)
-    if digito_2 > 9:
-        digito_2 = 0
-
-    # Verifica se os dígitos verificadores são iguais aos dígitos do CPF
-    if int(cpf[9]) == digito_1 and int(cpf[10]) == digito_2:
+    if cpf == cpf_gerado_pelo_calculo:
         return True
     else:
         return False
@@ -78,7 +79,7 @@ while True:
     if cpf_formatado:
         print(f"Seu CPF é {cpf_formatado} correto?")
 
-        resposta_do_cpf = input("(Sim/Não): ").lower()  # Corrigido para input() ao invés de uma string fixa
+        resposta_do_cpf = input("(Sim/Não): ").lower()
 
         if resposta_do_cpf == "sim":
             if valida_cpf(cpf):  # Chama a função para validar o CPF
@@ -89,10 +90,3 @@ while True:
             print("CPF inválido")
         else:
             print("Resposta inválida")
-
-
-
-
-        
-
-    
